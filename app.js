@@ -51,8 +51,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/api", demandListRouter);
-app.use("/api", authApiRouter);
+app.use("/v1", demandListRouter);
+app.use("/v1", authApiRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
