@@ -28,9 +28,9 @@ let DemandSchema = new mongoose.Schema({
     // 牵头人
     initiator: String,
     // 需求分析负责人
-    initiator: String,
+    initiator2: String,
     // 需求开发负责人
-    initiator: String,
+    initiator3: String,
     // 开发完成时间
     sit_time: Date,
     // 打包完成时间
