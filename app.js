@@ -6,9 +6,7 @@ const winston = require("winston");
 const DailyRotateFile = require("winston-daily-rotate-file");
 const fsExtra = require("fs-extra");
 
-const {
-  log_level,
-} = require("./config/config");
+const { log_level } = require("./config/config");
 const logDirectory = path.join(__dirname, "logs");
 fsExtra.ensureDirSync(logDirectory);
 
@@ -72,9 +70,9 @@ app.use(function (err, req, res, next) {
     stack: err.stack,
   });
 
-  // render the error page
+  //  the error response
   res.status(err.status || 500);
-  res.render("error");
+  res.json({ error: err });
 });
 
 module.exports = app;
