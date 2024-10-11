@@ -32,11 +32,11 @@ let DemandSchema = new mongoose.Schema({
     // 需求开发负责人
     initiator3: String,
     // 开发完成时间
-    sit_time: Date,
+    sit_time: String,
     // 打包完成时间
-    uat_time: Date,
+    uat_time: String,
     // 上线时间
-    prd_time: Date
+    prd_time: String
 });
 
 // 创建模型对象 对文档操作的封装对象
