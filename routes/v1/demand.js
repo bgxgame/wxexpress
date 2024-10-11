@@ -43,9 +43,12 @@ router.post("/demand", checkTokenMiddleware, function (req, res, next) {
   DemandModel.create({
     ...req.body,
     // 覆盖req.body.time
-    sit_time: moment(req.body.sit_time).toDate(),
-    uat_time: moment(req.body.uat_time).toDate(),
-    prd_time: moment(req.body.prd_time).toDate(),
+    // sit_time: moment(req.body.sit_time).toDate(),
+    // uat_time: moment(req.body.uat_time).toDate(),
+    // prd_time: moment(req.body.prd_time).toDate(),
+    sit_time: req.body.sit_time,
+    uat_time: req.body.uat_time,
+    prd_time: req.body.prd_time,
   })
     .then((data) => {
       res.json({
