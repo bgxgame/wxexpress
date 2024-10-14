@@ -3,6 +3,7 @@ const moment = require("moment");
 // 导入中间件
 const checkTokenMiddleware = require("../../middlewares/checkTokenMiddleware");
 const DemandModel = require("../../models/DemandModel");
+const { removeEmptyValues } = require("../../utils/common");
 const router = express.Router();
 
 // 需求列表
@@ -37,6 +38,38 @@ router.get("/demands", checkTokenMiddleware, function (req, res, next) {
     });
 });
 
+// 根据多个条件查询任务列表
+router.post("/demands", checkTokenMiddleware, function (req, res, next) {
+  // 获取由中间件挂载的用户信息
+  console.log(req.user);
+  
+  // 拿到所有任务信息 
+  DemandModel.find(removeEmptyValues(req.body))   
+    .exec()
+    .then((data) => {
+      console.log(data);
+      res.json({
+        // 响应编码
+        code: "0000", 
+        // 响应的信息
+        msg: "查询成功",
+        // 响应的数据
+        data: data,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        // 响应编码
+        code: "1002",
+        // 响应的信息
+        msg: "查询失败",
+        // 响应的数据
+        data: null,
+      });
+      return;
+    });
+});
+
 // 新增记录
 router.post("/demand", checkTokenMiddleware, function (req, res, next) {
   // TODO 表单验证
@@ -59,7 +92,7 @@ router.post("/demand", checkTokenMiddleware, function (req, res, next) {
     })
     .catch((err) => {
       res.json({
-        code: "1002",
+        code: "1003",
         msg: "新增失败",
         data: null,
       });
@@ -82,7 +115,7 @@ router.delete("/demand/:id", checkTokenMiddleware, function (req, res, next) {
     })
     .catch((err) => {
       res.json({
-        code: "1003",
+        code: "1004",
         msg: "删除失败",
         data: null,
       });
@@ -98,7 +131,7 @@ router.get("/demand/:id", checkTokenMiddleware, function (req, res, next) {
     .then((data) => {
       if (!data) {
         return res.json({
-          code: "1004",
+          code: "1005",
           msg: "记录ID或许有误",
           data: null,
         });
@@ -111,7 +144,7 @@ router.get("/demand/:id", checkTokenMiddleware, function (req, res, next) {
     })
     .catch((err) => {
       return res.json({
-        code: "1005",
+        code: "1006",
         msg: "获取单个记录失败",
         data: null,
       });
@@ -124,7 +157,7 @@ router.patch("/demand/:id", checkTokenMiddleware, function (req, res, next) {
   let { id } = req.params;
   DemandModel.updateOne({ _id: id }, req.body).catch((err) => {
     res.json({
-      code: "1006",
+      code: "1007",
       msg: "更新单个记录失败",
       data: null,
     });
@@ -135,7 +168,7 @@ router.patch("/demand/:id", checkTokenMiddleware, function (req, res, next) {
   DemandModel.findById(id)
     .catch((err) => {
       res.json({
-        code: "1007",
+        code: "1008",
         msg: "获取单个记录失败",
         data: null,
       });
