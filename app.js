@@ -12,6 +12,7 @@ fsExtra.ensureDirSync(logDirectory);
 
 var demandListRouter = require("./routes/v1/demand");
 var authApiRouter = require("./routes/v1/auth");
+var homeApiRouter = require("./routes/v1/home");
 
 var cors = require("cors");
 
@@ -51,6 +52,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/v1", demandListRouter);
 app.use("/v1", authApiRouter);
+app.use("/v1", homeApiRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
